@@ -57,17 +57,23 @@ import { useNavigate, Navigate } from "react-router-dom";
 import useGetUserInfo from "../../hook/useGetUserInfo.jsx";
 import { useEffect } from "react";
 
+
 export default function Auth() {
+
+
     const navigate = useNavigate()
-    const {isAuth} = useGetUserInfo
+    const {isAuth} = useGetUserInfo()
 
-
-     useEffect(() => {
+    useEffect(() => {
         if (isAuth) {
+         
           navigate('/');
         }
       }, [isAuth, navigate]);
+
    
+
+      
    
   const signInWithGoogle = async () => {
     const results = await signInWithPopup(auth, provider);
@@ -76,18 +82,23 @@ export default function Auth() {
       userID: results.user.uid,
       name: results.user.displayName,
       profilePhoto: results.user.photoURL,
-      isAuth: false,
+      isAuth: true,
     };
 
     localStorage.setItem("auth", JSON.stringify(authInfo));
-    navigate("/expense-tracker")
+  
+    navigate("/")
   };
 
 
-  
+
   if (isAuth) {
-    return <Navigate to="/expense-tracker" />;
+ 
+    return <Navigate to="/" />;
   }
+
+
+
   return (
     <VStack>
       <Heading>Sign In With Google</Heading>

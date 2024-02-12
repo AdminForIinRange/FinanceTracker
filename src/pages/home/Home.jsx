@@ -59,22 +59,35 @@ import {
 } from "@chakra-ui/react";
 import TransactionHistory from "../../components/TransactionHistory";
 import CategorySlider from "../../components/CategorySlider";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useGetUserInfo from "../../hook/useGetUserInfo.jsx";
 import Auth from "../Auth/Auth.jsx";
-
+import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Home() {
- const {isAuth} = useGetUserInfo
+
+const {isAuth} = useGetUserInfo()
+console.log(isAuth)
+const navigate = useNavigate() //the whole time i was retriving data like useGetUserInfo and not useGetUserInfo()
+
+useEffect(() => {
+  if (!isAuth) {
+   
+    navigate('/Auth');
+  }
+}, [isAuth, navigate]);
+
+
   return (
     <div style={{padding:"2.5%"}}>
   <HStack align={"start"}>
-  {  isAuth ? <>
+<div>
+  
+
   <TransactionHistory />
          <CategorySlider />
-         </> 
-        : <Auth />
-        }
+         </div> 
+  
 
       </HStack>
     

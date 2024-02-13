@@ -69,6 +69,7 @@ import {
 import Transactions from "./Transactions";
 import { AddIcon } from "@chakra-ui/icons";
 import { useState } from "react";
+import { CloseIcon } from "@chakra-ui/icons";
 
 import useAddTransaction from "../hook/useAddTransactions";
 import useGetTransaction from "../hook/useGetTransaction";
@@ -82,7 +83,7 @@ export default function TransactionHistory() {
   const [icon, seticon] = useState("");
 
   const { addTransaction } = useAddTransaction();
-  const { transactions } = useGetTransaction();
+  const { transactions,removeTransaction } = useGetTransaction();
 
   const handleModal = () => {
     setShowModal(false);
@@ -123,24 +124,64 @@ export default function TransactionHistory() {
       </VStack>
 
       <Box maxH={"580px"} overflowY={"scroll"}>
-  <VStack p={"15px"}>
-  {transactions.map((data) => {
-  const { id, category, title, amount, depiction, icon, createdAt } = data;
-  return (
-    <Transactions
-      key={id}
-      icon={icon}
-      title={title}
-      depiction={depiction}
-      amount={amount}
-      category={category}
-      createdAt={createdAt} // Pass createdAt as a prop
-    />
-  );
-})}
+  <VStack p={"15px"} spacing={4}>
+    {transactions.map((data) => {
+      const { 
+        id,
+        title,
+        amount,
+        depiction,
+        icon,
+        
+     } = data;
 
+    
+
+
+     const handleRemove = () => {
+      removeTransaction(id);
+    };
+      return (
+        <Box
+          key={id} // Add a unique key prop to the repeated elements
+          w={"100%"}
+          h={"100px"}
+          borderRadius={"15px"}
+          bg={"white"}
+          mb={4}
+        >
+          <HStack align={"center"} w={"100%"} h={"100%"}>
+            <Text fontSize={"40px"} ml={"10px"}>
+              {icon}
+            </Text>
+            <VStack align="start">
+              <Text fontSize={"22px"} fontWeight={"500"}>
+                {title}
+                <Text fontSize={"12px"} fontWeight={"500"}>
+              {depiction}  {/* Include depiction if needed */}
+              </Text>
+              </Text>
+             
+            </VStack>
+            <HStack
+              flex={1} // Allow the amount section to take up remaining space
+              align={"center"}
+              justify={"end"}
+              fontWeight={"500"}
+              fontSize={"22px"}
+            >
+              <Text color={"red.300"}>${amount}</Text>
+              <Button variant={"ghost"} colorScheme={"red"} onClick={handleRemove}>
+                <CloseIcon />
+              </Button>
+            </HStack>
+          </HStack>
+        </Box>
+      );
+    })}
   </VStack>
 </Box>
+
 
       <VStack justify={"center"} align={"center"} mt={"15px"}>
         <Button

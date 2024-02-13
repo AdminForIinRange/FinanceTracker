@@ -59,10 +59,29 @@ import {
 } from "@chakra-ui/react";
 import React, { PureComponent } from "react";
 import ExpenseData from "../../data/data";
-import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {
+  BarChart,
+  Bar,
+  Rectangle,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 
-import { useState } from "react";
+import useAddTransaction from "../hook/useAddTransactions";
+import useGetTransaction from "../hook/useGetTransaction";
 
+
+
+
+// Example: Output expenditure list for each month
+
+export default function CategorySlider() {
+  const { transactions, removeTransaction } = useGetTransaction();
+  
 function calculateTotalExpenses(data) {
   const totals = {};
 
@@ -84,7 +103,7 @@ function calculateTotalExpenses(data) {
 }
 
 // Calculate total expenses
-const totalExpenses = calculateTotalExpenses(ExpenseData);
+const totalExpenses = calculateTotalExpenses(transactions);
 
 // Output the total expenses for each category
 console.log("Total Expenses:");
@@ -92,44 +111,26 @@ for (const category in totalExpenses) {
   console.log(`${category}: ${totalExpenses[category]}`);
 }
 
-
 const data = [
   {
-
     EducationDevelopment: totalExpenses.EducationDevelopment,
-    
   },
   {
     FoodDrinks: totalExpenses.FoodDrinks,
-   
-
   },
   {
     EntertainmentRecreation: totalExpenses.EntertainmentRecreation,
-
   },
   {
     HouseholdUtilities: totalExpenses.HouseholdUtilities,
-
-
   },
   {
     HealthPersonalCare: totalExpenses.HealthPersonalCare,
-
   },
   {
     Other: totalExpenses.Other,
-
-  }
+  },
 ];
-
-
-
-
-
-// Example: Output expenditure list for each month
-
-export default function CategorySlider() {
   return (
     <>
       <Box w={"1600px"} h={"900px"} p={"1%"}>
@@ -159,9 +160,11 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.FoodDrinks
-                      ?<span>${totalExpenses.FoodDrinks} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.FoodDrinks ? (
+                      <span>${totalExpenses.FoodDrinks} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -192,9 +195,11 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.EducationDevelopment
-                      ? <span>${totalExpenses.EducationDevelopment} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.EducationDevelopment ? (
+                      <span>${totalExpenses.EducationDevelopment} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -225,9 +230,11 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.EntertainmentRecreation
-                      ? <span>${totalExpenses.EntertainmentRecreation} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.EntertainmentRecreation ? (
+                      <span>${totalExpenses.EntertainmentRecreation} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -258,9 +265,11 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.HouseholdUtilities
-                      ? <span>${totalExpenses.HouseholdUtilities} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.HouseholdUtilities ? (
+                      <span>${totalExpenses.HouseholdUtilities} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -291,9 +300,11 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.HealthPersonalCare
-                      ? <span>${totalExpenses.HealthPersonalCare} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.HealthPersonalCare ? (
+                      <span>${totalExpenses.HealthPersonalCare} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -314,19 +325,17 @@ export default function CategorySlider() {
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={
-                      totalExpenses.Other
-                        ? totalExpenses.Other / 50
-                        : 0
-                    }
+                    value={totalExpenses.Other ? totalExpenses.Other / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.Other
-                      ?  <span>${totalExpenses.Other} </span> 
-                      : "Not Spent Anything"}
+                    {totalExpenses.Other ? (
+                      <span>${totalExpenses.Other} </span>
+                    ) : (
+                      "Not Spent Anything"
+                    )}
                   </Text>
                 </VStack>
               </HStack>
@@ -335,22 +344,22 @@ export default function CategorySlider() {
         </HStack>
         <Box mt={"15px"} w={"1200px"} h={"400px"}>
           <ResponsiveContainer width="100%" height="100%">
-          <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
+            <BarChart
+              width={500}
+              height={300}
+              data={data}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
 
               <Bar
                 type="monotone"

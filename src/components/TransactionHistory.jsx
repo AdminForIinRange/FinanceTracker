@@ -69,15 +69,20 @@ import {
 import Transactions from "./Transactions";
 import { AddIcon } from "@chakra-ui/icons";
 import { useState } from "react";
-import ExpenseData from "../../data/data";
+
+import useAddTransaction from "../hook/useAddTransactions";
+import useGetTransaction from "../hook/useGetTransaction";
+
 export default function TransactionHistory() {
   const [showModal, setShowModal] = useState(null);
-  const [category, setCategory] = useState("Food & Drinks");
+  const [category, setCategory] = useState("FoodDrinks");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
   const [depiction, setDepiction] = useState("");
   const [icon, seticon] = useState("");
-  const [expanse, setExpanse] = useState("");
+
+  const { addTransaction } = useAddTransaction();
+  const { transactions } = useGetTransaction();
 
   const handleModal = () => {
     setShowModal(false);
@@ -85,13 +90,13 @@ export default function TransactionHistory() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-
-    console.log("Category:", category);
-    console.log("Title:", title);
-    console.log("Amount:", amount);
-    console.log("Depiction:", depiction);
-    console.log("Icon:", icon);
-    console.log("expanse:", expanse);
+    addTransaction({
+      category,
+      title,
+      amount,
+      depiction,
+      icon,
+    });
     setCategory("");
     setTitle("");
     setAmount(0);
@@ -99,10 +104,6 @@ export default function TransactionHistory() {
 
     handleModal();
   };
-
-
-  
-  
 
   return (
     <Box
@@ -122,21 +123,25 @@ export default function TransactionHistory() {
       </VStack>
 
       <Box maxH={"580px"} overflowY={"scroll"}>
-        <VStack p={"15px"}>
-          {ExpenseData.map((data) => (
-            <Transactions
-              key={data.key}
-              icon={data.icon}
-              title={data.title}
-              date={data.date}
-              amount={data.amount}
-              category={data.category}
-              
-              
-            />
-          ))}
-        </VStack>
-      </Box>
+  <VStack p={"15px"}>
+  {transactions.map((data) => {
+  const { id, category, title, amount, depiction, icon, createdAt } = data;
+  return (
+    <Transactions
+      key={id}
+      icon={icon}
+      title={title}
+      depiction={depiction}
+      amount={amount}
+      category={category}
+      createdAt={createdAt} // Pass createdAt as a prop
+    />
+  );
+})}
+
+  </VStack>
+</Box>
+
       <VStack justify={"center"} align={"center"} mt={"15px"}>
         <Button
           rightIcon={<AddIcon />}
@@ -248,16 +253,7 @@ export default function TransactionHistory() {
               </HStack>
 
               <HStack justify={"center"}>
-           
-                <Button
-                  type="submit"
-                  w={"40%"}
-                  colorScheme="green"
-                  mb={"10px"}
-                  onClick={() => {
-                    setExpanse(true);
-                  }}
-                >
+                <Button type="submit" w={"40%"} colorScheme="green" mb={"10px"}>
                   Submit
                 </Button>
               </HStack>

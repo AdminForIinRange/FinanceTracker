@@ -81,12 +81,11 @@ useEffect(() => {
   return (
     <div style={{padding:"2.5%"}}>
   <HStack align={"start"}>
-<div>
-  
+
 
   <TransactionHistory />
          <CategorySlider />
-         </div> 
+
   
 
       </HStack>

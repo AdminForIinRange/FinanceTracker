@@ -44,18 +44,12 @@ export default function useGetTransaction() {
     return () => unsubscribe();
   };
 
-  const removeTransaction = async (transactionId) => {
-    try {
-      await deleteDoc(doc(db, "transactions", transactionId));
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
 
   useEffect(() => {
     getTransaction();
 
   }, []);
 
-  return { transactions, removeTransaction };
+  return { transactions };
 }

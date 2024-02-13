@@ -3,8 +3,6 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "animate.css";
 
-import { StyledEngineProvider } from '@mui/material/styles';
-
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 
 const breakpoints = {
@@ -21,8 +19,8 @@ const breakpoints = {
 
 import "./styles/styles.css";
 
+import { store } from "./store";
 import { Provider } from "react-redux";
-
 
 const theme = extendTheme({
   breakpoints,
@@ -46,17 +44,10 @@ const theme = extendTheme({
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <ChakraProvider theme={theme}>
-     <StyledEngineProvider injectFirst>
-
-
-
     <React.StrictMode>
-     
-      <App />
-  
-     
+      <Provider store={store}>
+        <App />
+      </Provider>
     </React.StrictMode>
-    </StyledEngineProvider>
   </ChakraProvider>
-  )
-
+);

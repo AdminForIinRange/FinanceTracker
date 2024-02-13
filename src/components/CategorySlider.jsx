@@ -73,64 +73,23 @@ import {
 
 import useAddTransaction from "../hook/useAddTransactions";
 import useGetTransaction from "../hook/useGetTransaction";
-
-
-
+import BarGraph from "./BarGraph";
+import useCalculateChart from "../hook/useCalculateChart";
 
 // Example: Output expenditure list for each month
 
 export default function CategorySlider() {
-  const { transactions, removeTransaction } = useGetTransaction();
-  
-function calculateTotalExpenses(data) {
-  const totals = {};
+  const { transactions } = useGetTransaction();
+  const {data,
+    EducationDevelopment,
+    FoodDrinks,
+    EntertainmentRecreation,
+    HouseholdUtilities,
+    HealthPersonalCare,
+    Other,
+  } = useCalculateChart()
 
-  // Iterate through the expense data
-  data.forEach((expense) => {
-    const category = expense.category;
-    const amount = parseInt(expense.amount); // Convert amount to integer
-
-    // If category doesn't exist in totals, initialize it with 0
-    if (!totals[category]) {
-      totals[category] = 0;
-    }
-
-    // Add amount to the total of the category
-    totals[category] += amount;
-  });
-
-  return totals;
-}
-
-// Calculate total expenses
-const totalExpenses = calculateTotalExpenses(transactions);
-
-// Output the total expenses for each category
-console.log("Total Expenses:");
-for (const category in totalExpenses) {
-  console.log(`${category}: ${totalExpenses[category]}`);
-}
-
-const data = [
-  {
-    EducationDevelopment: totalExpenses.EducationDevelopment,
-  },
-  {
-    FoodDrinks: totalExpenses.FoodDrinks,
-  },
-  {
-    EntertainmentRecreation: totalExpenses.EntertainmentRecreation,
-  },
-  {
-    HouseholdUtilities: totalExpenses.HouseholdUtilities,
-  },
-  {
-    HealthPersonalCare: totalExpenses.HealthPersonalCare,
-  },
-  {
-    Other: totalExpenses.Other,
-  },
-];
+ 
   return (
     <>
       <Box w={"1600px"} h={"900px"} p={"1%"}>
@@ -151,8 +110,8 @@ const data = [
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      totalExpenses.FoodDrinks
-                        ? totalExpenses.FoodDrinks / 50
+                      FoodDrinks
+                        ? FoodDrinks / 50
                         : 0
                     }
                     size="md"
@@ -160,8 +119,8 @@ const data = [
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.FoodDrinks ? (
-                      <span>${totalExpenses.FoodDrinks} </span>
+                    {FoodDrinks ? (
+                      <span>${FoodDrinks} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -186,8 +145,8 @@ const data = [
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      totalExpenses.EducationDevelopment
-                        ? totalExpenses.EducationDevelopment / 50
+                      EducationDevelopment
+                        ? EducationDevelopment / 50
                         : 0
                     }
                     size="md"
@@ -195,8 +154,8 @@ const data = [
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.EducationDevelopment ? (
-                      <span>${totalExpenses.EducationDevelopment} </span>
+                    {EducationDevelopment ? (
+                      <span>${EducationDevelopment} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -221,8 +180,8 @@ const data = [
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      totalExpenses.EntertainmentRecreation
-                        ? totalExpenses.EntertainmentRecreation / 50
+                      EntertainmentRecreation
+                        ? EntertainmentRecreation / 50
                         : 0
                     }
                     size="md"
@@ -230,8 +189,8 @@ const data = [
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.EntertainmentRecreation ? (
-                      <span>${totalExpenses.EntertainmentRecreation} </span>
+                    {EntertainmentRecreation ? (
+                      <span>${EntertainmentRecreation} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -256,8 +215,8 @@ const data = [
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      totalExpenses.HouseholdUtilities
-                        ? totalExpenses.HouseholdUtilities / 50
+                      HouseholdUtilities
+                        ? HouseholdUtilities / 50
                         : 0
                     }
                     size="md"
@@ -265,8 +224,8 @@ const data = [
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.HouseholdUtilities ? (
-                      <span>${totalExpenses.HouseholdUtilities} </span>
+                    {HouseholdUtilities ? (
+                      <span>${HouseholdUtilities} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -291,8 +250,8 @@ const data = [
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      totalExpenses.HealthPersonalCare
-                        ? totalExpenses.HealthPersonalCare / 50
+                      HealthPersonalCare
+                        ? HealthPersonalCare / 50
                         : 0
                     }
                     size="md"
@@ -300,8 +259,8 @@ const data = [
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.HealthPersonalCare ? (
-                      <span>${totalExpenses.HealthPersonalCare} </span>
+                    {HealthPersonalCare ? (
+                      <span>${HealthPersonalCare} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -325,14 +284,14 @@ const data = [
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={totalExpenses.Other ? totalExpenses.Other / 50 : 0}
+                    value={Other ? Other / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {totalExpenses.Other ? (
-                      <span>${totalExpenses.Other} </span>
+                    {Other ? (
+                      <span>${Other} </span>
                     ) : (
                       "Not Spent Anything"
                     )}
@@ -342,70 +301,7 @@ const data = [
             </Box>
           </HStack>
         </HStack>
-        <Box mt={"15px"} w={"1200px"} h={"400px"}>
-          <ResponsiveContainer width="100%" height="100%">
-            <BarChart
-              width={500}
-              height={300}
-              data={data}
-              margin={{
-                top: 5,
-                right: 30,
-                left: 20,
-                bottom: 5,
-              }}
-            >
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Legend />
-
-              <Bar
-                type="monotone"
-                dataKey="EducationDevelopment"
-                stackId="1"
-                stroke="#F6E05E"
-                fill="#F6E05E"
-              />
-              <Bar
-                type="monotone"
-                dataKey="FoodDrinks"
-                stackId="1"
-                stroke="#F6AD55"
-                fill="#F6AD55"
-              />
-              <Bar
-                type="monotone"
-                dataKey="EntertainmentRecreation"
-                stackId="1"
-                stroke="#68D391"
-                fill="#68D391"
-              />
-              <Bar
-                type="monotone"
-                dataKey="HouseholdUtilities"
-                stackId="1"
-                stroke="#4FD1C5"
-                fill="#4FD1C5"
-              />
-              <Bar
-                type="monotone"
-                dataKey="HealthPersonalCare"
-                stackId="1"
-                stroke="#63B3ED"
-                fill="#63B3ED"
-              />
-              <Bar
-                type="monotone"
-                dataKey="Other"
-                stackId="1"
-                stroke="#76E4F7"
-                fill="#76E4F7"
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </Box>
+        <BarGraph />
       </Box>
     </>
   );

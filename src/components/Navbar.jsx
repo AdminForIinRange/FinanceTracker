@@ -60,7 +60,10 @@ import useGetUserInfo from "../hook/useGetUserInfo";
 import { signOut } from "firebase/auth";
 import { useNavigate, Navigate } from "react-router-dom";
 import { auth } from ".././Config/Firebase";
+import useCalculateChart from "../hook/useCalculateChart";
+
 export default function Navbar() {
+  const { TotalSum } = useCalculateChart();
   const { isAuth, name, profilePhoto } = useGetUserInfo();
   console.log(isAuth);
 
@@ -108,9 +111,16 @@ export default function Navbar() {
                 ) : (
                   <Button w={"100px"}>login</Button>
                 )}
-                <Button w={"100px"}>:)</Button>
-                <Button w={"100px"}>:l</Button>
               </ButtonGroup>
+              <HStack >
+              <span style={{fontSize:"22px"}}>Total: </span>
+                <Text fontSize={"22px"} fontWeight={500}>
+                 
+                  <Text color={"red"}>
+                  {TotalSum}
+                    </Text>
+                </Text>
+              </HStack>
             </HStack>
           </HStack>
         </Box>

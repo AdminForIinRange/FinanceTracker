@@ -73,9 +73,11 @@ import { CloseIcon } from "@chakra-ui/icons";
 
 import useAddTransaction from "../hook/useAddTransactions";
 import useGetTransaction from "../hook/useGetTransaction";
+import useRemoveTransactions from "../hook/useRemoveTransactions";
+import useModalControl from "../hook/useModalControl";
 
 export default function TransactionHistory() {
-  const [showModal, setShowModal] = useState(null);
+
   const [category, setCategory] = useState("FoodDrinks");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
@@ -83,12 +85,12 @@ export default function TransactionHistory() {
   const [icon, seticon] = useState("");
 
   const { addTransaction } = useAddTransaction();
-  const { transactions,removeTransaction } = useGetTransaction();
+  const { transactions } = useGetTransaction();
+  const { removeTransaction } = useRemoveTransactions();
 
-  const handleModal = () => {
-    setShowModal(false);
-  };
+  const { ModalOpen, ModalClose, showModal } = useModalControl()
 
+  
   const onSubmit = (e) => {
     e.preventDefault();
     addTransaction({
@@ -103,7 +105,7 @@ export default function TransactionHistory() {
     setAmount(0);
     setDepiction("");
 
-    handleModal();
+    ModalClose();
   };
 
   return (
@@ -124,77 +126,39 @@ export default function TransactionHistory() {
       </VStack>
 
       <Box maxH={"580px"} overflowY={"scroll"}>
-  <VStack p={"15px"} spacing={4}>
-    {transactions.map((data) => {
-      const { 
-        id,
-        title,
-        amount,
-        depiction,
-        icon,
-        
-     } = data;
+        <VStack p={"15px"} spacing={4}>
+          {transactions.map((data) => {
+            const { id, title, amount, depiction, icon } = data;
 
-    
-
-
-     const handleRemove = () => {
-      removeTransaction(id);
-    };
-      return (
-        <Box
-          key={id} // Add a unique key prop to the repeated elements
-          w={"100%"}
-          h={"100px"}
-          borderRadius={"15px"}
-          bg={"white"}
-          mb={4}
-        >
-          <HStack align={"center"} w={"100%"} h={"100%"}>
-            <Text fontSize={"40px"} ml={"10px"}>
-              {icon}
-            </Text>
-            <VStack align="start">
-              <Text fontSize={"22px"} fontWeight={"500"}>
-                {title}
-                <Text fontSize={"12px"} fontWeight={"500"}>
-              {depiction}  {/* Include depiction if needed */}
-              </Text>
-              </Text>
-             
-            </VStack>
-            <HStack
-              flex={1} // Allow the amount section to take up remaining space
-              align={"center"}
-              justify={"end"}
-              fontWeight={"500"}
-              fontSize={"22px"}
-            >
-              <Text color={"red.300"}>${amount}</Text>
-              <Button variant={"ghost"} colorScheme={"red"} onClick={handleRemove}>
-                <CloseIcon />
-              </Button>
-            </HStack>
-          </HStack>
-        </Box>
-      );
-    })}
-  </VStack>
-</Box>
-
+            const handleRemove = () => {
+              removeTransaction(id);
+            };
+            return (
+              <Transactions
+                key={id}
+                title={title}
+                amount={amount}
+                depiction={depiction}
+                icon={icon}
+                handleRemove={handleRemove} // Add a unique key prop to the repeated elements
+              />
+            );
+          })}
+        </VStack>
+      </Box>
 
       <VStack justify={"center"} align={"center"} mt={"15px"}>
         <Button
           rightIcon={<AddIcon />}
           colorScheme="teal"
           variant="outline"
-          onClick={() => setShowModal(true)}
+          onClick={ModalOpen}
         >
           Add New
         </Button>
       </VStack>
 
-      <Modal isOpen={showModal} onClose={handleModal}>
+      <Modal isOpen={showModal} onClose={ModalClose}>
         <ModalOverlay />
         <ModalContent>
           <VStack justify={"center"} align={"center"}>

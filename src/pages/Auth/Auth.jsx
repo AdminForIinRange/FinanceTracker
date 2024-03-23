@@ -57,24 +57,16 @@ import { useNavigate, Navigate } from "react-router-dom";
 import useGetUserInfo from "../../hook/useGetUserInfo.jsx";
 import { useEffect } from "react";
 
-
 export default function Auth() {
+  const navigate = useNavigate();
+  const { isAuth } = useGetUserInfo();
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
 
-    const navigate = useNavigate()
-    const {isAuth} = useGetUserInfo()
-
-    useEffect(() => {
-        if (isAuth) {
-         
-          navigate('/');
-        }
-      }, [isAuth, navigate]);
-
-   
-
-      
-   
   const signInWithGoogle = async () => {
     const results = await signInWithPopup(auth, provider);
     console.log(results);
@@ -86,18 +78,13 @@ export default function Auth() {
     };
 
     localStorage.setItem("auth", JSON.stringify(authInfo));
-  
-    navigate("/")
+
+    navigate("/");
   };
 
-
-
   if (isAuth) {
- 
     return <Navigate to="/" />;
   }
-
-
 
   return (
     <VStack>

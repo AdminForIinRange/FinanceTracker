@@ -2,7 +2,6 @@ import { Box, Text, HStack, VStack, Button, Spacer } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
 export default function Transactions({
- 
   title,
   amount,
   depiction,

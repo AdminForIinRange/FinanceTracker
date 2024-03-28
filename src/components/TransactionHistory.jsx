@@ -77,7 +77,6 @@ import useRemoveTransactions from "../hook/useRemoveTransactions";
 import useModalControl from "../hook/useModalControl";
 
 export default function TransactionHistory() {
-
   const [category, setCategory] = useState("FoodDrinks");
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState(0);
@@ -88,9 +87,8 @@ export default function TransactionHistory() {
   const { transactions } = useGetTransaction();
   const { removeTransaction } = useRemoveTransactions();
 
-  const { ModalOpen, ModalClose, showModal } = useModalControl()
+  const { ModalOpen, ModalClose, showModal } = useModalControl();
 
-  
   const onSubmit = (e) => {
     e.preventDefault();
     addTransaction({

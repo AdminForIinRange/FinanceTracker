@@ -16,27 +16,24 @@ export default function useGetTransaction() {
   const { userID } = useGetUserInfo();
   const transactionCollectionRef = collection(db, "transactions");
   const [transactions, setTransactions] = useState([]);
-  
+
   const getTransaction = async () => {
     let unsubscribe;
     try {
       const queryTransaction = query(
         transactionCollectionRef,
         where("userID", "==", userID),
-        orderBy("createdAt")
+        orderBy("createdAt"),
       );
       unsubscribe = onSnapshot(queryTransaction, (snapshot) => {
         let docs = [];
-       
+
         snapshot.forEach((doc) => {
           const data = doc.data();
           const id = doc.id;
           docs.push({ ...data, id });
-         
-          
         });
         setTransactions(docs);
-       
       });
     } catch (error) {
       console.log(error);
@@ -44,11 +41,8 @@ export default function useGetTransaction() {
     return () => unsubscribe();
   };
 
-
-
   useEffect(() => {
     getTransaction();
-
   }, []);
 
   return { transactions };

@@ -65,32 +65,22 @@ import Auth from "../Auth/Auth.jsx";
 import { useNavigate, Navigate } from "react-router-dom";
 
 export default function Home() {
+  const { isAuth } = useGetUserInfo();
+  console.log(isAuth);
+  const navigate = useNavigate(); //the whole time i was retriving data like useGetUserInfo and not useGetUserInfo()
 
-const {isAuth} = useGetUserInfo()
-console.log(isAuth)
-const navigate = useNavigate() //the whole time i was retriving data like useGetUserInfo and not useGetUserInfo()
-
-useEffect(() => {
-  if (!isAuth) {
-   
-    navigate('/Auth');
-  }
-}, [isAuth, navigate]);
-
+  useEffect(() => {
+    if (!isAuth) {
+      navigate("/Auth");
+    }
+  }, [isAuth, navigate]);
 
   return (
-    <div style={{padding:"2.5%"}}>
-  <HStack align={"start"}>
-
-
-  <TransactionHistory />
-         <CategorySlider />
-
-  
-
+    <div style={{ padding: "2.5%" }}>
+      <HStack align={"start"}>
+        <TransactionHistory />
+        <CategorySlider />
       </HStack>
-    
     </div>
-  )
+  );
 }
- 

@@ -75,10 +75,9 @@ import useGetTransaction from "../hook/useGetTransaction";
 import useCalculateChart from "../hook/useCalculateChart";
 
 export default function BarGraph() {
-    const {data} = useCalculateChart()
+  const { data } = useCalculateChart();
   // Output the total expenses for each category
 
-  
   return (
     <Box mt={"15px"} w={"1200px"} h={"400px"}>
       <ResponsiveContainer width="100%" height="100%">

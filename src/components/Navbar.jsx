@@ -112,13 +112,10 @@ export default function Navbar() {
                   <Button w={"100px"}>login</Button>
                 )}
               </ButtonGroup>
-              <HStack >
-              <span style={{fontSize:"22px"}}>Total: </span>
+              <HStack>
+                <span style={{ fontSize: "22px" }}>Total: </span>
                 <Text fontSize={"22px"} fontWeight={500}>
-                 
-                  <Text color={"red"}>
-                  {TotalSum}
-                    </Text>
+                  <Text color={"red"}>{TotalSum}</Text>
                 </Text>
               </HStack>
             </HStack>

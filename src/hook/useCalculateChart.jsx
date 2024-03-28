@@ -40,7 +40,10 @@ export default function useCalculateChart() {
   } = totalExpenses;
 
   // Calculate total sum of all categories
-  const TotalSum = Object.values(totalExpenses).reduce((acc, cur) => acc + cur, 0);
+  const TotalSum = Object.values(totalExpenses).reduce(
+    (acc, cur) => acc + cur,
+    0,
+  );
 
   const data = [
     { EducationDevelopment },

@@ -80,16 +80,16 @@ import useCalculateChart from "../hook/useCalculateChart";
 
 export default function CategorySlider() {
   const { transactions } = useGetTransaction();
-  const {data,
+  const {
+    data,
     EducationDevelopment,
     FoodDrinks,
     EntertainmentRecreation,
     HouseholdUtilities,
     HealthPersonalCare,
     Other,
-  } = useCalculateChart()
+  } = useCalculateChart();
 
- 
   return (
     <>
       <Box w={"1600px"} h={"900px"} p={"1%"}>
@@ -109,11 +109,7 @@ export default function CategorySlider() {
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={
-                      FoodDrinks
-                        ? FoodDrinks / 50
-                        : 0
-                    }
+                    value={FoodDrinks ? FoodDrinks / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
@@ -144,11 +140,7 @@ export default function CategorySlider() {
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={
-                      EducationDevelopment
-                        ? EducationDevelopment / 50
-                        : 0
-                    }
+                    value={EducationDevelopment ? EducationDevelopment / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
@@ -180,9 +172,7 @@ export default function CategorySlider() {
                     borderRadius={"15px"}
                     w={"180%"}
                     value={
-                      EntertainmentRecreation
-                        ? EntertainmentRecreation / 50
-                        : 0
+                      EntertainmentRecreation ? EntertainmentRecreation / 50 : 0
                     }
                     size="md"
                     colorScheme="green"
@@ -214,11 +204,7 @@ export default function CategorySlider() {
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={
-                      HouseholdUtilities
-                        ? HouseholdUtilities / 50
-                        : 0
-                    }
+                    value={HouseholdUtilities ? HouseholdUtilities / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
@@ -249,11 +235,7 @@ export default function CategorySlider() {
                   <Progress
                     borderRadius={"15px"}
                     w={"180%"}
-                    value={
-                      HealthPersonalCare
-                        ? HealthPersonalCare / 50
-                        : 0
-                    }
+                    value={HealthPersonalCare ? HealthPersonalCare / 50 : 0}
                     size="md"
                     colorScheme="green"
                   />
@@ -290,11 +272,7 @@ export default function CategorySlider() {
                   />
 
                   <Text fontSize={"18px"} fontWeight={500} color={"green"}>
-                    {Other ? (
-                      <span>${Other} </span>
-                    ) : (
-                      "Not Spent Anything"
-                    )}
+                    {Other ? <span>${Other} </span> : "Not Spent Anything"}
                   </Text>
                 </VStack>
               </HStack>
